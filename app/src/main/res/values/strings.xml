@@ -10,5 +10,6 @@
     <string name="cancel_button">Cancel</string>
     <string name="tweet_button">Tweet</string>
     <string name="tweet_hint">Enter tweet</string>
+    <string name="tv_charleft_default">140 characters remaining.</string>
 
 </resources>

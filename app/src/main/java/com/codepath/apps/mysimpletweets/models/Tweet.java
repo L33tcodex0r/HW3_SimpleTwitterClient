@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Tweet implements Serializable {
     //List out the attributes
     private String body;
-    private long uid; //Unique id for the tweet
+    private long id; //Unique id for the tweet
     private User user; //Store embedded user object.
     private String createdAt;
 
@@ -19,8 +19,8 @@ public class Tweet implements Serializable {
         return body;
     }
 
-    public long getUid() {
-        return uid;
+    public long getId() {
+        return id;
     }
 
     public String getCreatedAt() {
@@ -37,7 +37,7 @@ public class Tweet implements Serializable {
         //Extract the values from the json, store them
         try {
             tweet.body = jsonObject.getString("text");
-            tweet.uid = jsonObject.getLong("id");
+            tweet.id = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         } catch (JSONException e) {

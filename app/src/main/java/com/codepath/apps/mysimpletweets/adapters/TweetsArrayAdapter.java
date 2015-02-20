@@ -5,6 +5,7 @@ package com.codepath.apps.mysimpletweets.adapters;
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
+
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
         super(context, android.R.layout.simple_list_item_1);
     }
@@ -69,4 +71,8 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
         return relativeDate;
     }
+
+
+
+
 }
