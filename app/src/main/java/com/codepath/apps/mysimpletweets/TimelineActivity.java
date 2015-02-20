@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class TimelineActivity extends ActionBarActivity {
     private ArrayList<Tweet> tweets;
     private TweetsArrayAdapter aTweets;
     private ListView lvTweets;
+    private static final int COMPOSE_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,6 @@ public class TimelineActivity extends ActionBarActivity {
                 Log.d("DEBUG", json.toString());
                 aTweets.addAll(Tweet.fromJSONArray(json));
                 Log.d("DEBUG", aTweets.toString());
-                //Deserialize JSON
-                //Create models and add them to the adapter
-                //Load the model data into listview
-
             }
 
             @Override
@@ -79,10 +77,24 @@ public class TimelineActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ab_compose) {
+            Intent i = new Intent(this, ComposeActivity.class);
+            startActivityForResult(i, COMPOSE_REQUEST);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COMPOSE_REQUEST && resultCode == RESULT_OK) {
+
+            //Add the tweet to the timeline.
+            Tweet myNewTweet = (Tweet) data.getSerializableExtra("tweet");
+            aTweets.insert(myNewTweet, 0);
+            aTweets.notifyDataSetChanged();
+        }
     }
 }

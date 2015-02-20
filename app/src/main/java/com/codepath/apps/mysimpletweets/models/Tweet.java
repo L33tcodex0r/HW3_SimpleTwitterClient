@@ -4,10 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 //Parse the JSON + Store the data, encapsulate logic or display logic
-public class Tweet {
+public class Tweet implements Serializable {
     //List out the attributes
     private String body;
     private long uid; //Unique id for the tweet
@@ -67,5 +68,4 @@ public class Tweet {
         }
         return tweets;
     }
-
 }

@@ -43,7 +43,15 @@ public class TwitterClient extends OAuthBaseClient {
         //Execute the request
         getClient().get(apiUrl, params, handler);
     }
-    
+
+    public void sendTweet(String body, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", body);
+        getClient().post(apiUrl, params, handler);
+
+    }
+
     //COMPOSE TWEET
 
     //HomeTimeline - Gets us the timeline

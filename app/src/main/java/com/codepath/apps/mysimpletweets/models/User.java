@@ -3,7 +3,9 @@ package com.codepath.apps.mysimpletweets.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     //list attributes
     private String name;
     private long uid;
