@@ -124,7 +124,6 @@ public class TimelineActivity extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
             }
         }, getLowestId() - 1);
     }
@@ -139,5 +138,6 @@ public class TimelineActivity extends ActionBarActivity {
             }
         }
         return minId;
+
     }
 }

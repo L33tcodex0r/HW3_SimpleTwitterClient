@@ -39,7 +39,7 @@ public class TwitterClient extends OAuthBaseClient {
         //Specify the params
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        //params.put("since_id", 1);
+        params.put("since_id", 1);
         //Execute the request
         getClient().get(apiUrl, params, handler);
     }
