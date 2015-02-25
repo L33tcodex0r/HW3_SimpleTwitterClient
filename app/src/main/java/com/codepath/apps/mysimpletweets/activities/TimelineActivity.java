@@ -6,13 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.adapters.TweetsArrayAdapter;
-import com.codepath.apps.mysimpletweets.helpers.EndlessScrollListener;
+import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -20,43 +18,26 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class TimelineActivity extends ActionBarActivity {
 
-    private TwitterClient client;
-    private ArrayList<Tweet> tweets;
-    private TweetsArrayAdapter aTweets;
-    private ListView lvTweets;
+    private static TwitterClient client;
+    private static TweetsListFragment fragmentTweetsList;
     private static final int COMPOSE_REQUEST = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
-
-        //Create the arraylist (data source)
-        tweets = new ArrayList<>();
-
-        //Construct the adapter from data source
-        aTweets = new TweetsArrayAdapter(this, tweets);
-
-        //Connect adapter to list view
-        lvTweets.setAdapter(aTweets);
-
-        //Attach endless listener to the listview
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                getMoreTweets(totalItemsCount);
-            }
-        });
 
 
         //Get the client.
         client = TwitterApplication.getRestClient(); //singleton client
         populateTimeline();
+        if (savedInstanceState == null) {
+            //access fragment
+            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+        }
     }
 
     //Send an API request to get the timeline json
@@ -66,8 +47,8 @@ public class TimelineActivity extends ActionBarActivity {
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.d("DEBUG", json.toString());
-                aTweets.addAll(Tweet.fromJSONArray(json));
+
+                fragmentTweetsList.getAdapter().addAll(Tweet.fromJSONArray(json));
             }
 
             @Override
@@ -109,17 +90,17 @@ public class TimelineActivity extends ActionBarActivity {
 
             //Add the tweet to the timeline.
             Tweet myNewTweet = (Tweet) data.getSerializableExtra("tweet");
-            aTweets.insert(myNewTweet, 0);
-            aTweets.notifyDataSetChanged();
+            fragmentTweetsList.getAdapter().insert(myNewTweet, 0);
+            fragmentTweetsList.getAdapter().notifyDataSetChanged();
         }
     }
 
-    public void getMoreTweets(int totalItemsCount) {
+    public static void getMoreTweets(int totalItemsCount) {
         client.getMoreTweets(new JsonHttpResponseHandler() {
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                aTweets.addAll(Tweet.fromJSONArray(json));
+                fragmentTweetsList.getAdapter().addAll(Tweet.fromJSONArray(json));
             }
 
             @Override
@@ -128,11 +109,11 @@ public class TimelineActivity extends ActionBarActivity {
         }, getLowestId() - 1);
     }
 
-    public long getLowestId() {
-        int length = aTweets.getCount();
+    public static long getLowestId() {
+        int length = fragmentTweetsList.getAdapter().getCount();
         long minId = Long.MAX_VALUE;
         for (int i = 0; i < length; i++) {
-            long currentId = aTweets.getItem(i).getId();
+            long currentId = fragmentTweetsList.getAdapter().getItem(i).getId();
             if (currentId < minId) {
                 minId = currentId;
             }
