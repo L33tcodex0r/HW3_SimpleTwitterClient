@@ -28,8 +28,12 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        //Get the screen name from the activity that launches this.
+        String screenName = getIntent().getStringExtra("screen_name");
+
         client = TwitterApplication.getRestClient();
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        client.getUserInfo(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response); //My current user account's info
@@ -39,8 +43,6 @@ public class ProfileActivity extends ActionBarActivity {
         });
 
 
-        //Get the screen name from the activity that launches this.
-        String screenName = getIntent().getStringExtra("screen_name");
         if (savedInstanceState == null) {
             //Create the user timeline fragment
             UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
