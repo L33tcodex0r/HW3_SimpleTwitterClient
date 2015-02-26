@@ -1,17 +1,20 @@
 package com.codepath.apps.mysimpletweets.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.R;
-import com.codepath.apps.mysimpletweets.activities.TimelineActivity;
+import com.codepath.apps.mysimpletweets.activities.ProfileActivity;
 import com.codepath.apps.mysimpletweets.adapters.TweetsArrayAdapter;
-import com.codepath.apps.mysimpletweets.helpers.EndlessScrollListener;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 
 import java.util.ArrayList;
@@ -51,5 +54,6 @@ public class TweetsListFragment extends Fragment {
     public TweetsArrayAdapter getAdapter() {
         return aTweets;
     }
+
 
 }

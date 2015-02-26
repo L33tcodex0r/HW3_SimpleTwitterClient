@@ -3,9 +3,9 @@ package com.codepath.apps.mysimpletweets.adapters;
 //Taking the Tweet objects and turning them into Views displayed in the list
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.activities.ProfileActivity;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +51,23 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
         ivProfileImage.setImageResource(android.R.color.transparent); //clear out the old image for a recycled view
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nameString = null;
+                View parent = (View) v.getParent(); //Get the parent of the profile picture
+
+                nameString = ((TextView) parent.findViewById(R.id.tvUserName)).getText().toString(); //Get the text from the name string
+                String screenName = nameString.split("@")[1]; //Get the string after the "@" symbol
+
+                Intent i = new Intent(v.getContext(), ProfileActivity.class);
+                i.putExtra("screen_name", screenName);
+                v.getContext().startActivity(i);
+            }
+
+        });
+
         //Return the view to be inserted into the list
         return convertView;
 
@@ -71,8 +89,6 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
         return relativeDate;
     }
-
-
 
 
 }
