@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class TweetsListFragment extends Fragment {
     private ArrayList<Tweet> tweets;
-    private TweetsArrayAdapter aTweets;
-    private ListView lvTweets;
+    protected TweetsArrayAdapter aTweets;
+    protected ListView lvTweets;
 
 
     //inflation logic
@@ -31,13 +31,6 @@ public class TweetsListFragment extends Fragment {
         //Connect adapter to list view
         lvTweets.setAdapter(aTweets);
         //Attach endless listener to the listview
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                TimelineActivity.getMoreTweets(totalItemsCount);
-            }
-        });
-
         return v;
     }
 

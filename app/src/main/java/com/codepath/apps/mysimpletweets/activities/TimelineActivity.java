@@ -2,14 +2,22 @@ package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewParent;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
+import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,7 +28,7 @@ import org.json.JSONObject;
 
 public class TimelineActivity extends ActionBarActivity {
 
-    private static TwitterClient client;
+
     private static TweetsListFragment fragmentTweetsList;
     private static final int COMPOSE_REQUEST = 0;
 
@@ -30,34 +38,15 @@ public class TimelineActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-
-        //Get the client.
-        client = TwitterApplication.getRestClient(); //singleton client
-        populateTimeline();
-        if (savedInstanceState == null) {
-            //access fragment
-            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-        }
+        //Get the viewpager
+        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        //Set the viewpager adapter for the pager
+        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        //Find the tabstrip
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        //Attach the tabstrip to the viewpager
+        tabStrip.setViewPager(vpPager);
     }
-
-    //Send an API request to get the timeline json
-    //Fill the listview by creating the tweet objects from the json
-    private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            //Success
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-
-                fragmentTweetsList.getAdapter().addAll(Tweet.fromJSONArray(json));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
-            }
-        });
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,30 +84,45 @@ public class TimelineActivity extends ActionBarActivity {
         }
     }
 
-    public static void getMoreTweets(int totalItemsCount) {
-        client.getMoreTweets(new JsonHttpResponseHandler() {
-            //Success
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                fragmentTweetsList.getAdapter().addAll(Tweet.fromJSONArray(json));
-            }
+    //Return the order of the fragments in the view pager
+    public class TweetsPagerAdapter extends FragmentPagerAdapter {
+        private String tabTitles[] = {"Home", "Mentions"};
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            }
-        }, getLowestId() - 1);
-    }
+        //Adapter gets the manager insert or remove fragment from activity
+        public TweetsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    public static long getLowestId() {
-        int length = fragmentTweetsList.getAdapter().getCount();
-        long minId = Long.MAX_VALUE;
-        for (int i = 0; i < length; i++) {
-            long currentId = fragmentTweetsList.getAdapter().getItem(i).getId();
-            if (currentId < minId) {
-                minId = currentId;
+        //The order and creation of fragments within the pager
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new HomeTimelineFragment();
+            } else if (position == 1) {
+                return new MentionsTimelineFragment();
+            } else {
+                return null;
             }
         }
-        return minId;
 
+        //Return the tab title
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+
+        //How many fragments there are to swipe between
+        @Override
+        public int getCount() {
+            return tabTitles.length;
+        }
     }
+
+    public void onProfileView(MenuItem mi) {
+        //Launch the profile view
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
+
 }

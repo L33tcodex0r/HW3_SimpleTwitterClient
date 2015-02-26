@@ -37,6 +37,13 @@
         <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-e431f9cfc9642c59bdc5059cd5da0064fc92fb20.jar" />
     </item>
     <item
+        jar="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\exploded-aar\com.astuetz\pagerslidingtabstrip\1.0.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7912610ed96381c25c36d986eba422731b9641b6">
+        <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\classes-6f5a0605ff214a260875a45ae76a5ff2a40dc273.jar" />
+    </item>
+    <item
         jar="C:\Users\atu\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.6\a845a88238be0b5be9d238652c1bc0605ef91f52\android-async-http-1.4.6.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -44,18 +51,18 @@
         <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-39572df748c37d37fc86b556d36a9b5da4723fd3.jar" />
     </item>
     <item
-        jar="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="95fd37732ec852e99f07eeb516a3650172f1d136">
-        <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\classes-d361583134814665b45658ac1da67c9d6439e11e.jar" />
-    </item>
-    <item
         jar="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\libs\ActiveAndroid-3.1-08c6335cd.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="955936734b2b876772fdaf23d1bec3820fb0d1d5">
         <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\ActiveAndroid-3.1-08c6335cd-97dc462e63e6491b86577fe831de55bc05a80592.jar" />
+    </item>
+    <item
+        jar="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136">
+        <dex dex="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\pre-dexed\debug\classes-d361583134814665b45658ac1da67c9d6439e11e.jar" />
     </item>
     <item
         jar="C:\Users\atu\AndroidStudioProjects\HW3_SimpleTwitterClient\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
