@@ -35,7 +35,8 @@
                 android:ellipsize="end"
                 android:text="1 hr"
                 android:id="@+id/tvTime"
-                android:gravity="right" />
+                android:gravity="right"
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <TextView

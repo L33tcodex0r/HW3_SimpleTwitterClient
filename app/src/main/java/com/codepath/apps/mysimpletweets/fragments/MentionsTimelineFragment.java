@@ -1,10 +1,15 @@
 package com.codepath.apps.mysimpletweets.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.helpers.EndlessScrollListener;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -22,6 +27,18 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         //Get the client.
         client = TwitterApplication.getRestClient(); //singleton client
         populateTimeline();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, parent, savedInstanceState);
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                getMoreMentions();
+            }
+        });
+        return v;
     }
 
     //Send an API request to get the timeline json
@@ -42,8 +59,8 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         });
     }
 
-/*    public static void getMoreTweets(int totalItemsCount) {
-        client.getMoreTweets(new JsonHttpResponseHandler() {
+    public void getMoreMentions() {
+        client.getMoreMentions(new JsonHttpResponseHandler() {
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
@@ -56,7 +73,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         }, getLowestId() - 1);
     }
 
-    public static long getLowestId() {
+    public long getLowestId() {
         int length = aTweets.getCount();
         long minId = Long.MAX_VALUE;
         for (int i = 0; i < length; i++) {
@@ -67,5 +84,5 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         }
         return minId;
 
-    }*/
+    }
 }

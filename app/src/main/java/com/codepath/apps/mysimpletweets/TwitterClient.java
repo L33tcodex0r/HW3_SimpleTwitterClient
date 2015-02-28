@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.scribe.builder.api.Api;
@@ -45,12 +44,20 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
-    public void getMoreTweets(AsyncHttpResponseHandler handler, long max_id) {
-        String apiUrl = getApiUrl("statuses/home_timeline.json");
-        //Specify the params
+    public void getMoreTweets(String screenName, AsyncHttpResponseHandler handler, long max_id) {
+        String apiUrl;
         RequestParams params = new RequestParams();
+
+        if (screenName == "") { //Get own timeline
+            apiUrl = getApiUrl("statuses/home_timeline.json");
+        } else { //Get timeline of user.
+            apiUrl = getApiUrl("statuses/user_timeline.json");
+            params.put("screen_name", screenName);
+        }
+
         params.put("count", 25);
         params.put("max_id", max_id);
+
         //Execute the request
         getClient().get(apiUrl, params, handler);
     }
@@ -69,6 +76,16 @@ public class TwitterClient extends OAuthBaseClient {
         //Specify the params
         RequestParams params = new RequestParams();
         params.put("count", 25);
+        //Execute the request
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getMoreMentions(AsyncHttpResponseHandler handler, long max_id) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        //Specify the params
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("max_id", max_id);
         //Execute the request
         getClient().get(apiUrl, params, handler);
     }
