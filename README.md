@@ -1,8 +1,23 @@
 # Simple Twitter Client
 
-This is the Week 3 project for CodePath.
+This is the Week 4 project for Codepath, updated from the Week 3 project's code base.
 
 Completed user stories:
+
+* [x] Includes all required user stories from Week 3 Twitter Client
+* [x]  User can switch between Timeline and Mention views using tabs.
+	* User can view their home timeline tweets.
+	* User can view the recent mentions of their username.
+* [x]   User can navigate to view their own profile
+	* User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+* [x]  User can click on the profile image in any tweet to see another user's profile.
+	* User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+	* Profile view should include that user's timeline                
+    * [x]User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
+
+	![Video Walkthrough] (hw4.gif)
+
+Week 3 Completed user stories:
 
 
 * [x] User can sign in to Twitter using OAuth login
@@ -16,4 +31,3 @@ Completed user stories:
     * User is taken back to home timeline with new tweet visible in timeline
     * [x] Optional: User can see a counter with total number of characters left for tweet
 
-![Video Walkthrough] (hw3.gif)
